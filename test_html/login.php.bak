@@ -1,0 +1,164 @@
+<?php
+$hostname_connectLMS = "localhost";
+$database_connectLMS = "db_library";
+$username_connectLMS = "root";
+$password_connectLMS = "19963";
+$connectLMS = mysql_pconnect($hostname_connectLMS, $username_connectLMS, $password_connectLMS) or trigger_error(mysql_error(), E_USER_ERROR);
+?>
+<?php
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+$loginFormAction = $_SERVER['PHP_SELF'];
+if (isset($_GET['accesscheck'])) {
+    $_SESSION['PrevUrl'] = $_GET['accesscheck'];
+}
+if (isset($_POST['username'])) {
+    $loginUsername = $_POST['username'];
+    $password = $_POST['password'];
+    $MM_fldUserAuthorization = "u_type";
+    $MM_redirectLoginSuccess = "library.php";
+    $MM_redirectLoginFailed = "error.php";
+    $MM_redirecttoReferrer = false;
+    mysql_select_db($database_connectLMS, $connectLMS);
+
+    $LoginRS__query = sprintf("SELECT user_ID, user_PassWord, user_Type FROM user WHERE binary user_ID='%s' AND user_PassWord='%s'",
+        get_magic_quotes_gpc() ? $loginUsername : addslashes($loginUsername), get_magic_quotes_gpc() ? $password : addslashes($password));
+    $LoginRS = mysql_query($LoginRS__query, $connectLMS) or die(mysql_error());
+    $loginFoundUser = mysql_num_rows($LoginRS);
+    if ($loginFoundUser) {
+        $loginStrGroup = mysql_result($LoginRS, 0, 'user_Type');
+
+        //declare two session variables and assign them
+        $_SESSION['MM_Username'] = $loginUsername;
+        $_SESSION['MM_UserGroup'] = $loginStrGroup;
+        mysql_close($connectLMS);
+        if (isset($_SESSION['PrevUrl']) && false) {
+            $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];
+        }
+        header("Location: " . $MM_redirectLoginSuccess);
+    } else {
+        header("Location: " . $MM_redirectLoginFailed);
+    }
+}
+?>
+<!--
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                    "pageLength": 25,
+                    "paging": false
+                }
+            );
+
+        });
+    </script>
+
+-->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8">
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>用户登陆</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <script src="assets/js/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/material.css"/>
+    <script src="./assets/js/material.js"></script>
+    <script>
+        function validateform() {
+            if (document.checkuser.username.value == "") {
+                window.alert("请输入你的登录名!")
+                return false;
+            }
+            if (document.checkuser.password.value == "") {
+                window.alert("密码不能为空!")
+                return false;
+            }
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: art-font;
+            src: url('./assets/fonts/antsypants.regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        div {
+            font-family: art-font;
+        }
+	.form-signin {
+	    max-width: 330px;
+	    padding: 15px;
+	    margin: 0 auto;
+	}
+	input {
+	    margin-botton :3px;
+	}
+    </style>
+</head>
+<body background="assets/images/bg5.jpg">
+<nav class="navbar navbar-static">
+    <div class="container">
+        <div class="nav-collapse collase">
+            <ul class="nav navbar-nav">
+                <li><img src="./assets/images/sunoracle.png" height="50"></li>
+                <li><a href="library_v2.php"><div>Oracle BDC Book Library</div></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+-->
+<div class="container" style="margin-top:100px">
+    <form class="form-signin" role="form" ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="checkuser"
+          onSubmit="return validateform( this.form )">
+	<h2 class="form-signin-heading">Login</h2>
+	<input type="text" name="username" class="form-control" placeholder="Username" required autofocus>  
+	<input type="password" name="password" class="form-control" placeholder="Password" required autofocus>          
+	<!--<table border="1" bgcolor="#C0DEED">
+            <tr>
+                <td>
+                    登录名:
+                </td>
+                <td>
+                    <input type="text" name="username" size="20"/>
+                    <font color="#8080C0">*</font>
+                </td>
+            </tr>
+            *********************************-->
+
+           <!-- <tr>
+                <td>
+                    密 码:
+                </td>
+                <td>
+                    <input type="password" name="password" size="20"/>
+                    <font color="#8080C0">*</font>
+                </td>
+            </tr>
+            *********************************-->
+
+       	 <button class="btn btn-danger btn-lg btn-primary btn-block" type="submit" value="Submit">Submit</button>
+<!--
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="reset" value="重置"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="提交"/>
+                </td>
+            </tr>
+        </table>-->
+        <a href="logout.php"></a>
+    </form>
+</div>
+</body>
+</html>

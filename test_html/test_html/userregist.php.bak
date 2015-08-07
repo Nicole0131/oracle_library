@@ -1,0 +1,156 @@
+<script>
+<!--
+	function validateform()
+	{
+		if(document.userregist.userid.value == "")
+		{
+			window.alert ("请输入您的帐号!")
+			return false;
+		}
+		if(document.userregist.username.value == "")
+		{
+			window.alert ("请输入您的姓名!")
+			return false;
+		}
+		if(document.userregist.userpasswordone.value == "")
+		{
+			window.alert ("密码不能为空!")
+			return false;
+		}
+		if(document.userregist.userpasswordtwo.value == "")
+		{
+			window.alert ("密码不能为空!")
+			return false;
+		}
+		if(document.userregist.usermanager.value == "")
+		{
+			window.alert ("请输入您的经理!")
+			return false;
+		}
+		if(document.userregist.useradmin.value == "")
+		{
+			window.alert ("请输入您的管理员!")
+			return false;
+		}
+		if(document.userregist.useremail.value == "")
+		{
+			window.alert ("请输入您的邮箱!")
+			return false;
+		}
+		if(document.userregist.usertelephone.value == "")
+		{
+			window.alert ("请输入你的电话!")
+			return false;
+		}
+	}
+//-->
+</script>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link rel="shortcut icon" href="favicon.ico" />
+<title>用户注册</title>
+<link href="lms.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<center>
+<table border="1" width="800" cellspacing="0" cellpadding="0" bgcolor="#E4E4E4" bordercolorlight="#C2C2C2" bordercolordark="#FFFFFF">
+  <tr height="256">
+    <td colspan="6"><img src="pics/banner.png" width="796" height="254"></td>
+  </tr>
+</table>
+</center>
+<center>
+<table border="1" width="800" height="30" cellspacing="0" cellpadding="0" bgcolor="#E4E4E4" bordercolorlight="#C2C2C2" bordercolordark="#FFFFFF">
+	<tr>
+  	<td width="234" align="center">
+  	<img src="pics/position.png" width="16" height="16" align="absmiddle">&nbsp;你的位置	</td>
+        <td><img src="pics/rightdir.png" width="16" height="16" align="absmiddle">[&gt;  用户注册&lt;]</td>
+	</tr>
+</table>
+</center>	
+<center>
+<form ACTION="userregister.php" METHOD="POST" name="userregist" onSubmit="return validateform( this.form )">
+<table border="1" width="800" height="30" cellspacing="0" cellpadding="0" bgcolor="#E4E4E4" bordercolorlight="#C2C2C2" bordercolordark="#FFFFFF">
+	<tr>
+  	<td width="234" rowspan="10" align="center"><img src="pics/default.png" alt="用户照片" width="128" height="128"></td>
+        <td >帐号：</td>
+	<td>
+	<input type="text" name="userid" size="20"/>
+	<font color="#8080C0">*</font><font size="2" color="#8080C0">   最长不超过20字符</font>
+	</td>
+	</tr>
+	<tr>
+  	<td>姓名：</td>
+	<td>
+	<input type="text" name="username" size="20"/>
+	<font color="#8080C0">*</font>
+	</td>
+	</tr>
+	<tr>
+  	<td>密码：</td>
+	<td>
+	<input type="password" name="userpasswordone" size="20"/>
+	<font color="#8080C0">*</font><font size="2" color="#8080C0">   最长不超过20位</font>
+	</td>
+	</tr>
+	<tr>
+  	<td>重复密码：</td>
+	<td>
+	<input type="password" name="userpasswordtwo" size="20"/>
+	<font color="#8080C0">*</font>
+	</td>
+	</tr>
+	<tr>
+  	<td>经理：</td>
+	<td>
+	<input type="text" name="usermanager" size="20"/>
+	<font color="#8080C0">*</font>
+	</td>
+	</tr>
+	<tr>
+  	<td>部门管理员：</td>
+	<td>
+	<input type="text" name="useradmin" size="20"/>
+	<font color="#8080C0">*</font>
+	</td>
+	</tr>
+	<tr>
+  	<td>邮箱：</td>
+	<td>
+	<input type="text" name="useremail" size="20"/>
+	<font color="#8080C0">*</font>
+	</td>
+	</tr>
+	<tr>
+  	<td>电话：</td>
+	<td>
+	<input type="text" name="usertelephone" size="20"/>
+	<font color="#8080C0">*</font>
+	</td>
+	</tr>
+	<tr>
+	<td colspan="2" align="left">	
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="submit" width="200" value="注册" />
+	</td>
+</tr>
+</table>
+</form>
+</center>
+<center>
+	<table border="0" width="800" cellspacing="0" cellpadding="0">
+	<tr>
+		<td><hr size="1"></td>
+	</tr>
+	</table>
+	<table border="1" width="800" height="50" cellspacing="0" cellpadding="0" bgcolor="#E4E4E4" bordercolorlight="#C2C2C2" bordercolordark="#FFFFFF">
+	<tr>
+		<td align="center" height="23" style="font-size:10.5pt">版权所有(C)2013 北京市海淀区-甲骨文公司系统平台部
+		E-Mail:<a href="#">联系我们</a>
+		<a href="library.php">返回主页</a> </td>
+	</tr>
+	</table>
+</center>
+</body>
+</html>

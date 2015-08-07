@@ -1,0 +1,134 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <title>个人信息管理</title>
+</head>
+<body bgcolor="172232">
+<div align="center">
+    <table border="0" width="1080">
+        <tr>
+            <td><img src="assets/images/Oracle_building.jpeg" width="1080" height="200"></td>
+        </tr>
+    </table>
+    <table border="1" width="1080" height="30" cellspacing="0" cellpadding="0" bgcolor="#C0DEED"
+           bordercolorlight="#C2C2C2" bordercolordark="#FFFFFF">
+        <tr>
+            <td width="234" align="center">
+                <img src="pics/position.png" width="16" height="16" align="absmiddle">&nbsp;你的位置
+            </td>
+            <td>&nbsp;&nbsp;<a href="library.php"><
+                    <返回主页
+                </a>&nbsp;&nbsp;&nbsp;
+                <img src="pics/rightdir.png" width="16" height="16" align="absmiddle">[&gt;<a
+                    href="usermanage.php">个人信息管理</a>&lt;]
+            </td>
+            <td><a href="logout.php">退出登录</a></td>
+        </tr>
+    </table>
+
+    <?php
+    $userid = $_GET['userid'];
+    require_once "dbaccess.php";
+    $query = "select * from books join record on books.ID = record.book_ID join user on user.user_ID = record.user_ID where record.user_ID = ";
+    $query = $query . "\"" . $userid . "\"";
+    $result = mysql_query($query);
+    if (!$result) {
+        die('Invalid query: ' . mysql_error());
+    }
+    $rows = mysql_num_rows($result);
+    if ($rows != 0) {
+        $rows = $rows - 1;
+
+        mysql_data_seek($result, $rows);
+        $data = @mysql_fetch_array($result);
+        ?>
+        <table border="1" width="1080" height="30" cellspacing="0" cellpadding="0" bgcolor="#C0DEED"
+               bordercolorlight="#C2C2C2" bordercolordark="#FFFFFF">
+            <tr>
+                <td width="15%">
+                    <div align="center">所借图书</div>
+                </td>
+                <td width="20%">
+                    <div align="center">借出日期</div>
+                </td>
+                <td width="20%">
+                    <div align="center">应还日期</div>
+                </td>
+                <td width="15%">
+                    <div align="center">管理员</div>
+                </td>
+                <td width="15%">
+                    <div align="center">经理</div>
+                </td>
+                <td width="15%" colspan="3">
+                    <div align="center">操作</div>
+                </td>
+            </tr>
+            <?php
+            $i = 0;
+            mysql_data_seek($result, $i);
+            $data = @mysql_fetch_array($result);
+            $username = $data['BookName'];
+            $tel = $data['Layout'];
+            $bname = $data['ReturnDay'];
+            $returnday = $data['user_Admin'];
+            $manager = $data['user_Manager'];
+            ?>
+
+            <tr>
+                <td width="15%">
+                    <div align="center"><?php echo "$username" ?></div>
+                </td>
+                <td width="20%">
+                    <div align="center"><?php echo "$tel" ?></div>
+                </td>
+                <td width="20%">
+                    <div align="center"><?php echo "$bname" ?></div>
+                </td>
+                <td width="15%">
+                    <div align="center"><?php echo "$returnday" ?></div>
+                </td>
+                <td width="15%">
+                    <div align="center"><?php echo "$manager" ?></div>
+                </td>
+
+
+                <td width="10%">
+                    <div align="center">
+                        <a href="continue.php?userid=<?php echo "$userid" ?>">续借</a></div>
+                </td>
+            </tr>
+        </table>
+        <?php
+    } else {
+        ?>
+        <table border="1" width="1080" bgcolor="#C0DEED">
+            <tr>
+                <td align="center">
+                    您还没有借书，快去<a href="library.php">主页</a>借书吧：）
+                </td>
+            </tr>
+        </table>
+    <?php
+    }
+    //require_once "freeresult.php";
+    require_once "dbclose.php";
+    ?>
+    <table border="0" width="1080" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <hr size="1">
+            </td>
+        </tr>
+    </table>
+    <table border="1" width="1080" height="50" cellspacing="0" cellpadding="0" bgcolor="#C0DEED"
+           bordercolorlight="#C2C2C2" bordercolordark="#FFFFFF">
+        <tr>
+            <td align="center" height="23" style="font-size:10.5pt">版权所有(C)2015 大中华区甲骨文研究院
+                E-Mail:<a href="mailto:oraclehcts@gmail.com">联系我们</a>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
